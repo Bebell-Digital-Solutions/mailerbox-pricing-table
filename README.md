@@ -1,0 +1,1 @@
+# mailerbox-pricing-table
