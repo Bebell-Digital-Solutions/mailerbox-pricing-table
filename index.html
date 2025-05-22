@@ -1,11 +1,30 @@
-
-
-
-
-<html> 
+<!DOCTYPE html>
+<html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Pricing Tables</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
+  
+  
+  /* Add this at the top of your CSS */
+  .mobile-only {
+    display: none; /* Force hide on desktop */
+  }
+
+  @media (max-width: 768px) {
+    .desktop-only {
+      display: none;
+    }
+    .mobile-only {
+      display: block; /* Show only on mobile */
+    }
+  }
+  
+  
+  
     .custom-purple {
       background-color: #7652ac;
     }
@@ -17,37 +36,133 @@
       font-size: 20px;
     }
     
-  @media (max-width: 768px) {
-  .carousel-wrapper {
-    flex-direction: column;
-    align-items: center;
-    width: 70%;
-  }
+    
+   .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 180px;
+      height: 50px;
+    }
+    
+    
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #7652ac;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 42px;
+      width: 90px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 34px;
+      z-index: 0;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(82px);
+    }
+    
+    
+    
+    .slider-text {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      font-weight: bold;
+      width: 100%;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 8px;
+      box-sizing: border-box;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    
+    .slider-text span {
+      width: 50%;
+      transition: color 0.4s;
+    }
+    
+    /* Texto morado cuando está seleccionado */
+    .toggle-switch input:not(:checked) ~ .slider-text span:first-child {
+      color: #7652ac;
+    }
+    
+    
+    .toggle-switch input:checked ~ .slider-text span:last-child {
+      color: #7652ac;
+    }
 
-  .carousel-column {
-    width: 80%;
-  }
-
-  .ofertas-section {
-    font-size: 18px;
-  }
-}
     
     
     
     
     
+    .mobile-only {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .desktop-only {
+        display: none;
+      }
+      .mobile-only {
+        display: block;
+      }
+      .pricing-column {
+        width: 100%;
+        margin-bottom: 30px;
+      }
+      .toggle-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+    }
   </style>
-    
-    
-    
 </head>
-<body class="bg-[#f5f4ff] flex justify-center items-center min-h-screen">  <!-- Pricing section with mobile responsiveness -->
+<body class="bg-[#f5f4ff] flex justify-center items-center min-h-screen">
+
+
   <div class="w-[90%] mx-auto bg-[#f5f4ff] py-8">
+    <!-- Toggle for mobile -->
+    <div class="mobile-only toggle-container">
+      <label class="toggle-switch">
+        <input type="checkbox" id="planToggle">
+        <span class="slider"></span>
+        <div class="slider-text">
+          <span>Mensual</span>
+          <span>Anual</span>
+        </div>
+      </label>
+    </div>
+
     <div class="flex flex-col md:flex-row md:gap-6 gap-8">
-      
-      <!-- Plan Mensual -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/2">
+      <!-- Plan Mensual - Desktop -->
+      <div class="desktop-only bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/2">
         <div class="custom-purple text-white text-center py-4">
           <h2 class="text-xl font-semibold">PLAN MENSUAL</h2>
           <p>Paga cada 1 mes</p>
@@ -92,8 +207,8 @@
         </div>
       </div>
 
-      <!-- Plan Anual -->
-      <div class="bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/2 relative">
+      <!-- Plan Anual - Desktop -->
+      <div class="desktop-only bg-white rounded-lg shadow-lg overflow-hidden w-full md:w-1/2 relative">
         <div class="custom-purple text-white text-center py-4">
           <h2 class="text-xl font-semibold">PLAN ANUAL</h2>
           <p>Paga cada 12 meses</p>
@@ -106,7 +221,7 @@
             <span class="text-gray-500 ml-2">/ Mes</span>
           </div>
           <p class="text-gray-500 mt-2">USD 39.60 por usuario / Año</p>
-         <button class="custom-purple hover:bg-purple-700 text-white py-2 px-4 rounded mt-4 transition-colors"
+          <button class="custom-purple hover:bg-purple-700 text-white py-2 px-4 rounded mt-4 transition-colors"
             onclick="window.location.href='https://checkout.bebelldigitalsolutions.com/cart/add/6maXLb0W?disable_backlinks'">
             COMPRAR PLAN
           </button>
@@ -116,7 +231,7 @@
           <ul class="divide-y">
             <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">Personalización de cuenta</span><i class="fas fa-check text-green-500"></i></li>
             <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">2 GB almacenamiento</span><i class="fas fa-check text-green-500"></i></li>
-            <li class="py-2 px-4 flex justify-between items-center"><span>1 Cuenta de usuario</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>1 cuenta de usuario</span><i class="fas fa-check text-green-500"></i></li>
             <li class="py-2 px-4 flex justify-between items-center"><span>Protocolos SMTP, IMAP, POP3</span><i class="fas fa-check text-green-500"></i></li>
             <li class="py-2 px-4 flex justify-between items-center"><span>Correos transaccionales <i class="fas fa-info-circle text-gray-400"></i></span><i class="fas fa-check text-green-500"></i></li>
             <li class="py-2 px-4 flex justify-between items-center"><span>Calendario Integrado</span><i class="fas fa-check text-green-500"></i></li>
@@ -139,12 +254,117 @@
         </div>
       </div>
 
+      <!-- Plan Mensual - Mobile -->
+      <div id="monthlyMobile" class="mobile-only pricing-column bg-white rounded-lg shadow-lg overflow-hidden w-full">
+        <div class="custom-purple text-white text-center py-4">
+          <h2 class="text-xl font-semibold">PLAN MENSUAL</h2>
+          <p>Paga cada 1 mes</p>
+        </div>
+        <div class="p-6 text-center">
+          <p class="text-gray-500">Desde</p>
+          <div class="flex justify-center items-baseline">
+            <span class="text-4xl font-bold">$4.50</span>
+            <span class="text-gray-500 ml-2">/ Mes</span>
+          </div>
+          <p class="text-gray-500 mt-2">por usuario x mes</p>
+          <button class="custom-purple hover:bg-purple-700 text-white py-2 px-4 rounded mt-4 transition-colors"
+            onclick="window.location.href='https://checkout.bebelldigitalsolutions.com/cart/add/6maXLb0W?disable_backlinks'">
+            COMPRAR PLAN
+          </button>
+          <p class="text-gray-500 mt-2">Pagos procesados por PayPal en USD.</p>
+        </div>
+        <div class="border-t">
+          <ul class="divide-y">
+            <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">Personalización de cuenta</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">2 GB almacenamiento</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>1 cuenta de usuario</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Protocolos SMTP, IMAP, POP3</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Correos transaccionales <i class="fas fa-info-circle text-gray-400"></i></span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Calendario Integrado</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de tareas</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de notas</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de contactos</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de archivos personales</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Chat integrado</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Recordatorios</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Firma digital profesional</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Programación de Correos</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Acuse de recepción (proof)</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Funciones avanzadas <i class="fas fa-info-circle text-gray-400"></i></span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Cancela cuando guste</span><i class="fas fa-check text-green-500"></i></li>
+          </ul>
+        </div>
+        <div class="bg-gray-100 text-center py-4">
+          <i class="fas fa-globe text-custom-purple"></i>
+          <span class="ml-2">Soporte multilingüe por Email</span>
+        </div>
+      </div>
+
+      <!-- Plan Anual - Mobile -->
+      <div id="annualMobile" class="mobile-only pricing-column bg-white rounded-lg shadow-lg overflow-hidden w-full" style="display: none;">
+        <div class="custom-purple text-white text-center py-4">
+          <h2 class="text-xl font-semibold">PLAN ANUAL</h2>
+          <p>Paga cada 12 meses</p>
+        </div>
+        <div class="absolute top-0 right-0 oferta-label text-white font-semibold px-2 py-1 rounded-bl-lg">OFERTA</div>
+        <div class="p-6 text-center">
+          <p class="text-gray-500">Desde</p>
+          <div class="flex justify-center items-baseline">
+            <span class="text-4xl font-bold">$3.30</span>
+            <span class="text-gray-500 ml-2">/ Mes</span>
+          </div>
+          <p class="text-gray-500 mt-2">USD 39.60 por usuario / Año</p>
+          <button class="custom-purple hover:bg-purple-700 text-white py-2 px-4 rounded mt-4 transition-colors"
+            onclick="window.location.href='https://checkout.bebelldigitalsolutions.com/cart/add/6maXLb0W?disable_backlinks'">
+            COMPRAR PLAN
+          </button>
+          <p class="text-gray-500 mt-2">Pagos procesados por PayPal en USD.</p>
+        </div>
+        <div class="border-t">
+          <ul class="divide-y">
+            <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">Personalización de cuenta</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span class="font-bold">2 GB almacenamiento</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>1 cuenta de usuario</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Protocolos SMTP, IMAP, POP3</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Correos transaccionales <i class="fas fa-info-circle text-gray-400"></i></span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Calendario Integrado</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de tareas</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de notas</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de contactos</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Manejador de archivos personales</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Chat integrado</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Recordatorios</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Firma digital profesional</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Programación de Correos</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Acuse de recepción (proof)</span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Funciones avanzadas <i class="fas fa-info-circle text-gray-400"></i></span><i class="fas fa-check text-green-500"></i></li>
+            <li class="py-2 px-4 flex justify-between items-center"><span>Cancela cuando guste</span><i class="fas fa-check text-green-500"></i></li>
+          </ul>
+        </div>
+        <div class="bg-gray-100 text-center py-4">
+          <i class="fas fa-globe text-custom-purple"></i>
+          <span class="ml-2">Soporte multilingüe por Email</span>
+        </div>
+      </div>
     </div>
   </div>
-    <script src="https://cdn.tailwindcss.com"></script>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.getElementById('planToggle');
+      const monthlyMobile = document.getElementById('monthlyMobile');
+      const annualMobile = document.getElementById('annualMobile');
+
+      toggle.addEventListener('change', function() {
+        if (this.checked) {
+          monthlyMobile.style.display = 'none';
+          annualMobile.style.display = 'block';
+        } else {
+          monthlyMobile.style.display = 'block';
+          annualMobile.style.display = 'none';
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
-
-
